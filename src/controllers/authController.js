@@ -18,12 +18,14 @@ exports.login = async (req, res) => {
         // 1. Kiểm tra MSSV
         const member = await Member.findOne({ mssv });
         if (!member) {
+            console.log(`❌ Login failed: Không tìm thấy MSSV ${mssv}`);
             return res.status(401).json({ message: 'MSSV hoặc mật khẩu không chính xác' });
         }
 
         // 2. Kiểm tra mật khẩu
         const isMatch = await member.comparePassword(password);
         if (!isMatch) {
+            console.log(`❌ Login failed: Sai mật khẩu cho MSSV ${mssv}`);
             return res.status(401).json({ message: 'MSSV hoặc mật khẩu không chính xác' });
         }
 
