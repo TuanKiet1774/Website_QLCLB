@@ -18,3 +18,23 @@ exports.createRoleSession = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
+
+exports.updateRoleSession = async (req, res) => {
+    try {
+        const roleSession = await RoleSession.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!roleSession) return res.status(404).json({ message: 'Không tìm thấy vai trò buổi sinh hoạt' });
+        res.status(200).json(roleSession);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+exports.deleteRoleSession = async (req, res) => {
+    try {
+        const roleSession = await RoleSession.findByIdAndDelete(req.params.id);
+        if (!roleSession) return res.status(404).json({ message: 'Không tìm thấy vai trò buổi sinh hoạt' });
+        res.status(200).json({ message: 'Đã xóa vai trò buổi sinh hoạt thành công' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

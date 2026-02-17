@@ -56,6 +56,38 @@ exports.getMemberById = async (req, res) => {
     }
 };
 
+// Cập nhật thông tin thành viên
+exports.updateMember = async (req, res) => {
+    try {
+        const member = await Member.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        if (!member) return res.status(404).json({ message: 'Không tìm thấy thành viên để cập nhật' });
+        res.status(200).json(member);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+// Xóa 1 thành viên
+exports.deleteMember = async (req, res) => {
+    try {
+        const member = await Member.findByIdAndDelete(req.params.id);
+        if (!member) return res.status(404).json({ message: 'Không tìm thấy thành viên để xóa' });
+        res.status(200).json({ message: 'Đã xóa thành viên thành công' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// Xóa tất cả thành viên
+exports.deleteAllMembers = async (req, res) => {
+    try {
+        await Member.deleteMany({});
+        res.status(200).json({ message: 'Đã xóa toàn bộ thành viên' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 // Thống kê tổng quan thành viên
 exports.getMemberStats = async (req, res) => {
     try {
