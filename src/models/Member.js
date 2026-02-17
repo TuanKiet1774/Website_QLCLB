@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
 const memberSchema = new mongoose.Schema({
@@ -41,6 +42,19 @@ const memberSchema = new mongoose.Schema({
     timestamps: true,
     versionKey: false
 });
+
+// Mã hóa mật khẩu trước khi lưu
+memberSchema.pre('save', async function (next) {
+    if (!this.isModified('passwordHash')) return next();
+    const salt = await bcrypt.genSalt(10);
+    this.passwordHash = await bcrypt.hash(this.passwordHash, salt);
+    next();
+});
+
+// So sánh mật khẩu
+memberSchema.methods.comparePassword = async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.passwordHash);
+};
 
 // Thêm Indexes
 memberSchema.index({ fullName: 'text', email: 'text' }); // Tìm kiếm văn bản (Search)

@@ -18,6 +18,9 @@ npm init -y
 # Ba thư viện chính: express mongoose dotenv 
 npm install express mongoose dotenv
 
+# Thêm thư viện bcryptjs
+npm install bcryptjs
+    
 #Thư viện hỗ trợ phát triển (dev)
 npm install nodemon --save-dev
 
