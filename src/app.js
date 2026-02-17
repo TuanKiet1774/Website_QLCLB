@@ -7,6 +7,8 @@ const authRoutes = require('./routes/authRoutes');
 const memberRoutes = require('./routes/memberRoutes');
 const sessionRoutes = require('./routes/sessionRoutes');
 const attendanceRoutes = require('./routes/attendanceRoutes');
+const roleRoutes = require('./routes/roleRoutes');
+const roleSessionRoutes = require('./routes/roleSessionRoutes');
 
 // Import Middleware
 const auth = require('./middleware/authMiddleware');
@@ -19,6 +21,8 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/roles', auth, roleRoutes);
+app.use('/api/role-sessions', auth, roleSessionRoutes);
 app.use('/api/members', auth, memberRoutes); // Yêu cầu đăng nhập để xem/quản lý thành viên
 app.use('/api/sessions', auth, sessionRoutes); // Yêu cầu đăng nhập để xem/quản lý buổi sinh hoạt
 app.use('/api/attendance', auth, attendanceRoutes); // Yêu cầu đăng nhập để điểm danh
