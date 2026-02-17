@@ -42,4 +42,9 @@ const memberSchema = new mongoose.Schema({
     versionKey: false
 });
 
+// Thêm Indexes
+memberSchema.index({ mssv: 1 }); // Tìm kiếm theo MSSV
+memberSchema.index({ fullName: 'text', email: 'text' }); // Tìm kiếm văn bản (Search)
+memberSchema.index({ roleId: 1 }); // Tối ưu khi lọc theo vai trò
+
 module.exports = mongoose.model('Member', memberSchema);

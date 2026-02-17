@@ -25,4 +25,7 @@ const attendanceSchema = new mongoose.Schema({
     versionKey: false
 });
 
+// Index cho thống kê điểm danh
+attendanceSchema.index({ sessionId: 1, status: 1 });
+
 module.exports = mongoose.model('Attendance', attendanceSchema);
