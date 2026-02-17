@@ -19,9 +19,9 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/members', memberRoutes);
-app.use('/api/sessions', sessionRoutes);
-app.use('/api/attendance', auth, attendanceRoutes); // Bảo vệ route điểm danh bằng JWT
+app.use('/api/members', auth, memberRoutes); // Yêu cầu đăng nhập để xem/quản lý thành viên
+app.use('/api/sessions', auth, sessionRoutes); // Yêu cầu đăng nhập để xem/quản lý buổi sinh hoạt
+app.use('/api/attendance', auth, attendanceRoutes); // Yêu cầu đăng nhập để điểm danh
 
 app.get('/', (req, res) => {
     res.send('Website Quản lý CLB API is running...');
