@@ -1,17 +1,29 @@
 # Website Quản Lý Câu Lạc Bộ
 
-### Các bước thực hiện
+## 🚀 Cách tạo Project Node.js + MongoDB
 
-1.  **Clone repository:**
+### 1️⃣ Tạo thư mục chứa project
+```bash
+mkdir my-project
+cd my-project
+```
 
-    ```bash
-    git clone https://github.com/TuanKiet1774/Website_QLCLB.git
-    cd Website_QLCLB
-    ```
+### 2️⃣ Khởi tạo project Node.js
+```bash
+npm init -y
+```
 
-2.  **Cài đặt các package cần thiết:**
+### 3️⃣ Cài đặt các thư viện cần thiết
+```bash
+# Ba thư viện chính: express mongoose dotenv 
+npm install express mongoose dotenv
 
-    ```bash
-    npm init -y
-    npm install express mssql cors
-    ```
+#Thư viện hỗ trợ phát triển (dev)
+npm install nodemon --save-dev
+
+```
+
+### 4️⃣ Các công cụ cần thiết
+- MongoDB Atlas: [Đăng ký và tạo database](https://cloud.mongodb.com/)
+- Render: [Đăng ký và tạo server](https://render.com/)
+- Github: [Đăng ký và tạo repository](https://github.com/)
