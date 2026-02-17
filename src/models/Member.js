@@ -44,11 +44,10 @@ const memberSchema = new mongoose.Schema({
 });
 
 // Mã hóa mật khẩu trước khi lưu
-memberSchema.pre('save', async function (next) {
-    if (!this.isModified('passwordHash')) return next();
+memberSchema.pre('save', async function () {
+    if (!this.isModified('passwordHash')) return;
     const salt = await bcrypt.genSalt(10);
     this.passwordHash = await bcrypt.hash(this.passwordHash, salt);
-    next();
 });
 
 // So sánh mật khẩu
