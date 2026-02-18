@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # 🌟 Website Quản Lý Câu Lạc Bộ (Club Management System)
+=======
+# Website Quản Lý Câu Lạc Bộ - BackEnd
+>>>>>>> 2cd0e45048314c9b0469bfb1f00572f5f22de5ee
 
 Chào mừng bạn đến với dự án **Website Quản Lý Câu Lạc Bộ**! Đây là một hệ thống quản lý toàn diện dành cho các câu lạc bộ sinh viên, giúp theo dõi thành viên, hoạt động sinh hoạt và điểm danh một cách hiệu quả.
 
