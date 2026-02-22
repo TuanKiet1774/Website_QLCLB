@@ -1,5 +1,29 @@
 const Attendance = require('../models/Attendance');
 
+exports.getAllAttendance = async (req, res) => {
+    try {
+        const list = await Attendance.find()
+            .populate('sessionId')
+            .populate('memberId')
+            .lean();
+        res.status(200).json(list);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+exports.getAttendanceById = async (req, res) => {
+    try {
+        const record = await Attendance.findById(req.params.id)
+            .populate('sessionId')
+            .populate('memberId');
+        if (!record) return res.status(404).json({ message: 'Không tìm thấy bản ghi điểm danh' });
+        res.status(200).json(record);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 exports.markAttendance = async (req, res) => {
     try {
         const attendance = new Attendance(req.body);

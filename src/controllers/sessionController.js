@@ -1,4 +1,5 @@
 const Session = require('../models/Session');
+const Attendance = require('../models/Attendance');
 
 exports.getAllSessions = async (req, res) => {
     try {
@@ -6,6 +7,18 @@ exports.getAllSessions = async (req, res) => {
             .populate('instructors.memberId')
             .populate('instructors.roleSessionId');
         res.status(200).json(sessions);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+exports.getSessionById = async (req, res) => {
+    try {
+        const session = await Session.findById(req.params.id)
+            .populate('instructors.memberId')
+            .populate('instructors.roleSessionId');
+        if (!session) return res.status(404).json({ message: 'Không tìm thấy buổi sinh hoạt' });
+        res.status(200).json(session);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -23,7 +36,12 @@ exports.createSession = async (req, res) => {
 
 exports.updateSession = async (req, res) => {
     try {
-        const session = await Session.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const session = await Session.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        ).populate('instructors.memberId').populate('instructors.roleSessionId');
+
         if (!session) return res.status(404).json({ message: 'Không tìm thấy buổi sinh hoạt' });
         res.status(200).json(session);
     } catch (error) {
@@ -35,7 +53,11 @@ exports.deleteSession = async (req, res) => {
     try {
         const session = await Session.findByIdAndDelete(req.params.id);
         if (!session) return res.status(404).json({ message: 'Không tìm thấy buổi sinh hoạt' });
-        res.status(200).json({ message: 'Đã xóa buổi sinh hoạt thành công' });
+
+        // Cascade delete attendance records for this session
+        await Attendance.deleteMany({ sessionId: req.params.id });
+
+        res.status(200).json({ message: 'Đã xóa buổi sinh hoạt và dữ liệu điểm danh liên quan' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

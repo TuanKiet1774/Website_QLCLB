@@ -9,6 +9,16 @@ exports.getAllRoles = async (req, res) => {
     }
 };
 
+exports.getRoleById = async (req, res) => {
+    try {
+        const role = await Role.findById(req.params.id);
+        if (!role) return res.status(404).json({ message: 'Không tìm thấy vai trò' });
+        res.status(200).json(role);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 exports.createRole = async (req, res) => {
     try {
         const newRole = new Role(req.body);

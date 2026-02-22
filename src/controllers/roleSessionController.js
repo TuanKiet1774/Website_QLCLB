@@ -9,6 +9,16 @@ exports.getAllRoleSessions = async (req, res) => {
     }
 };
 
+exports.getRoleSessionById = async (req, res) => {
+    try {
+        const roleSession = await RoleSession.findById(req.params.id);
+        if (!roleSession) return res.status(404).json({ message: 'Không tìm thấy vai trò buổi sinh hoạt' });
+        res.status(200).json(roleSession);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 exports.createRoleSession = async (req, res) => {
     try {
         const newRoleSession = new RoleSession(req.body);
